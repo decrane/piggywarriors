@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piggy Warriors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .intro {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .piggy-image {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .piggy-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .image-container {
+            position: relative;
+            display: inline-block;
+            width: 50%;
+        }
+        
+        .piggy-image, .piggy-warrior {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .piggy-warrior {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: rotateY(90deg);
+        }
+        
+        .image-container:hover .piggy-image {
+            opacity: 0;
+            transform: rotateY(-90deg);
+        }
+        
+        .image-container:hover .piggy-warrior {
+            opacity: 1;
+            transform: rotateY(0deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HELLO FELLOW WARRIORS!!!</h1>
+        
+        <div class="intro">
+            My name is Barrett. I am a piggy warrior.followed by 5 other piggy Warriors. 
+        </div>
+        
+        <div class="image-container">
+            <img src="https://media.4-paws.org/9/4/f/5/94f5197df88687ce362e32f23b926f0a246c1b54/VIER%20PFOTEN_2016-11-16_028%20%281%29-1843x1275.jpg" 
+                 alt="Piggy Warriors" 
+                 class="piggy-image">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIF-rxfIfjYdOzTXBT4D5xWcp8cEJ7C03x1f_2qQVg22PD3rzDSVqwNCRGrQ9M37EgaTI&usqp=CAU" 
+                 alt="Piggy Warrior" 
+                 class="piggy-warrior">
+        </div>
+    </div>
+</body>
+</html>

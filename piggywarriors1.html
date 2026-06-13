@@ -10,7 +10,7 @@
             text-align: center;
             margin: 0;
             padding: 20px;
-            background-color: #f0f8ff;
+            background-color: #ff00ff;
             transition: background-color 0.4s ease, color 0.4s ease;
         }
         .container {
@@ -232,11 +232,130 @@
         .spin-btn:hover { transform: translateY(-1px); background: #95de64; box-shadow: 0 6px 14px rgba(0,0,0,0.18); }
         .wheel-result { margin-top: 6px; font-weight: 700; color: #333; }
         body.dark-mode .wheel-result { color: #e6f7ff; }
+
+        /* Piggy Escape */
+        .escape-section {
+            margin-top: 32px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .escape-btn {
+            display: inline-block;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 8px;
+            background: #ff4d4f;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+            transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .escape-btn:hover {
+            transform: translateY(-1px);
+            background: #ff7875;
+            box-shadow: 0 7px 16px rgba(0,0,0,0.22);
+        }
+
+        /* Comments */
+        .comments-section {
+            margin-top: 32px;
+            margin-bottom: 40px;
+        }
+        .comments-title {
+            margin: 0 0 12px 0;
+        }
+        .comments-form {
+            max-width: 520px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .comment-input,
+        .comment-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font: inherit;
+            background: #fff;
+            color: #222;
+        }
+        .comment-textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .comment-btn {
+            align-self: center;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            background: #ff85c0;
+            color: #3a1028;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .comment-btn:hover {
+            transform: translateY(-1px);
+            background: #ffadd2;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+        }
+        .comments-list {
+            max-width: 620px;
+            margin: 18px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+        .comment-item {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .comment-name {
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: #333;
+        }
+        .comment-message {
+            color: #444;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        .comments-empty {
+            color: #666;
+            text-align: center;
+        }
+        body.dark-mode .comment-input,
+        body.dark-mode .comment-textarea,
+        body.dark-mode .comment-item {
+            background: #0a1b33;
+            border-color: #112a4d;
+            color: #e6f7ff;
+        }
+        body.dark-mode .comment-name,
+        body.dark-mode .comment-message {
+            color: #e6f7ff;
+        }
+        body.dark-mode .comments-empty {
+            color: #aac6e6;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>HELLO FELLOW WARRIORS!!! </h1>
+        <h1>HELLO FELLOW WARRIORS!!!! </h1>
         
         <div class="intro">
             My name is Barrett. I am a piggy warrior along with four other 
@@ -257,7 +376,7 @@
     <div class="container">
         <div class="game-container">
             <canvas id="trexCanvas" width="800" height="220" tabindex="0" aria-label="T-Rex Runner Game"></canvas>
-            <div class="game-instructions">Press Space/Up to jump, Down to duck. Click the game box if keys don’t respond.</div>
+            <div class="game-instructions">Press Space/Up to jump, Down to duck. Tap or click the game box to jump.</div>
         </div>
     </div>
 
@@ -329,6 +448,25 @@
                 <button id="spinNumberBtn" class="spin-btn" type="button">Spin the wheel</button>
                 <div id="numberWheelResult" class="wheel-result"></div>
             </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="escape-section">
+            <a class="escape-btn" href="https://piggy-escape.replit.app">Play Piggy Escape</a>
+            <a class="escape-btn" href="https://swine-sea-dogs.replit.app">Play Swine Sea Pigs</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="comments-section">
+            <h2 class="comments-title">Comments</h2>
+            <form id="commentsForm" class="comments-form">
+                <input id="commentName" class="comment-input" type="text" maxlength="40" placeholder="Your name" aria-label="Your name">
+                <textarea id="commentMessage" class="comment-textarea" maxlength="300" placeholder="Write a comment" aria-label="Write a comment" required></textarea>
+                <button class="comment-btn" type="submit">Add comment</button>
+            </form>
+            <div id="commentsList" class="comments-list" aria-live="polite"></div>
         </div>
     </div>
 
@@ -581,7 +719,12 @@
                         const landed = ((-rotation - Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
                         const index = Math.floor(landed / seg);
                         const picked = numbers[index % numbers.length];
-                        resultEl.textContent = `Random number: ${picked}`;
+                        if (picked === 10) {
+                            resultEl.textContent = 'You win! You got 10!';
+                            if (window.launchFireworksBurst) window.launchFireworksBurst();
+                        } else {
+                            resultEl.textContent = `Random number: ${picked}`;
+                        }
                     }
                 }
                 requestAnimationFrame(step);
@@ -810,7 +953,12 @@
                         const landed = ((-rotation - Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
                         const index = Math.floor(landed / seg);
                         const picked = jobs[index % jobs.length];
-                        resultEl.textContent = `Random job: ${picked}`;
+                        if (picked === 'Farmer') {
+                            resultEl.textContent = 'You win! You got Farmer!';
+                            if (window.launchFireworksBurst) window.launchFireworksBurst();
+                        } else {
+                            resultEl.textContent = `Random job: ${picked}`;
+                        }
                     }
                 }
                 requestAnimationFrame(step);
@@ -1061,6 +1209,75 @@
 
             btn.addEventListener('click', spin);
             canvas.addEventListener('click', spin);
+        })();
+    </script>
+    <script>
+        // Local comments saved in this browser.
+        (function () {
+            const form = document.getElementById('commentsForm');
+            const nameInput = document.getElementById('commentName');
+            const messageInput = document.getElementById('commentMessage');
+            const list = document.getElementById('commentsList');
+            if (!form || !nameInput || !messageInput || !list) return;
+
+            const storageKey = 'piggyWarriorsComments';
+
+            function loadComments() {
+                try {
+                    return JSON.parse(localStorage.getItem(storageKey) || '[]');
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveComments(comments) {
+                localStorage.setItem(storageKey, JSON.stringify(comments));
+            }
+
+            function renderComments() {
+                const comments = loadComments();
+                list.innerHTML = '';
+
+                if (comments.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'comments-empty';
+                    empty.textContent = 'No comments yet.';
+                    list.appendChild(empty);
+                    return;
+                }
+
+                comments.forEach((comment) => {
+                    const item = document.createElement('div');
+                    item.className = 'comment-item';
+
+                    const name = document.createElement('div');
+                    name.className = 'comment-name';
+                    name.textContent = comment.name || 'Anonymous';
+
+                    const message = document.createElement('div');
+                    message.className = 'comment-message';
+                    message.textContent = comment.message;
+
+                    item.appendChild(name);
+                    item.appendChild(message);
+                    list.appendChild(item);
+                });
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = nameInput.value.trim().slice(0, 40);
+                const message = messageInput.value.trim().slice(0, 300);
+                if (!message) return;
+
+                const comments = loadComments();
+                comments.unshift({ name, message });
+                saveComments(comments.slice(0, 25));
+                messageInput.value = '';
+                renderComments();
+            });
+
+            renderComments();
         })();
     </script>
     <script>
@@ -1372,7 +1589,16 @@
                 }
             }
 
+            function isTypingField(target) {
+                return target && (
+                    target.tagName === 'INPUT' ||
+                    target.tagName === 'TEXTAREA' ||
+                    target.isContentEditable
+                );
+            }
+
             function handleKeyDown(e) {
+                if (isTypingField(e.target)) return;
                 if (e.code === 'Space' || e.code === 'ArrowUp') {
                     e.preventDefault();
                     startOrJump();
@@ -1381,6 +1607,7 @@
                 }
             }
             function handleKeyUp(e) {
+                if (isTypingField(e.target)) return;
                 if (e.code === 'ArrowDown') {
                     player.ducking = false;
                 }
@@ -1390,8 +1617,12 @@
             document.addEventListener('keydown', handleKeyDown);
             document.addEventListener('keyup', handleKeyUp);
 
-            // Focus canvas on click for accessibility
-            canvas.addEventListener('click', () => canvas.focus());
+            // Mouse/touch input for desktop and mobile.
+            canvas.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                canvas.focus();
+                startOrJump();
+            });
         })();
     </script>
     
